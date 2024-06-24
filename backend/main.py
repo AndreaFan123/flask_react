@@ -18,15 +18,13 @@ def create_contact():
     last_name = request.json.get("lastName")
     email = request.json.get("email")
 
-    print("new contact", {first_name, last_name, email})
-
-
     # Check if values are existed
     if not first_name or not last_name or not email:
         return (
             jsonify({"message":"You must include a first name, last name and email"}),400
         )
     new_contact = Contact(first_name= first_name, last_name=last_name, email=email)
+
 
     try:
         db.session.add(new_contact)
@@ -61,7 +59,7 @@ def delete_contact(user_id):
     if not contact:
         return jsonify({"message":"User not found!"}), 404
     
-    db.session.delete()
+    db.session.delete(contact)
     db.session.commit()
 
     return jsonify({"message":"User contact is deleted!"}), 200

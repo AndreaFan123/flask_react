@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from "react";
 import ContactTable from "./components/contact-table/contact-table";
-import ContactForm from "./components/contact-form/contact-form";
 
 export type ContactType = {
+  id: number;
   firstName: string;
   lastName: string;
   email: string;
@@ -13,7 +13,8 @@ export type ContactType = {
 function App() {
   const [contacts, setContacts] = useState<ContactType[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const GET_CONTACTS = import.meta.env.VITE_GET_CONTACTS as string;
+  const GET_CONTACTS = (import.meta.env.VITE_BASE_URL +
+    import.meta.env.VITE_GET_CONTACTS) as string;
 
   async function fetchContacts() {
     try {
@@ -39,9 +40,8 @@ function App() {
   }, []);
 
   return (
-    <div className="flex w-full max-w-[1400px] mx-auto gap-5 items-baseline">
+    <div className="flex w-full max-w-[1400px] px-4 mx-auto gap-5 items-baseline">
       {isLoading ? <span>Loading</span> : <ContactTable contacts={contacts} />}
-      <ContactForm />
     </div>
   );
 }

@@ -14,9 +14,12 @@ def get_contacts():
 @app.route("/create-contact", methods=["POST"])
 def create_contact():
     # Get first name, last name and email from request
-    first_name = request.get("firstName")
-    last_name = request.get("lastName")
-    email = request.get("email")
+    first_name = request.json.get("firstName")
+    last_name = request.json.get("lastName")
+    email = request.json.get("email")
+
+    print("new contact", {first_name, last_name, email})
+
 
     # Check if values are existed
     if not first_name or not last_name or not email:
